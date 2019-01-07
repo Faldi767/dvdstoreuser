@@ -23,6 +23,14 @@ class View extends CI_Controller {
 		$this->load->view('shop');
 		$this->load->view('footer');
 	}
+	public function shopdetail()
+	{
+		$data['nav'] = "shop";
+		$this->load->view('head');
+		$this->load->view('navbar', $data);
+		$this->load->view('shopdetail');
+		$this->load->view('footer');
+	}
 	public function cart()
 	{
 		$data['nav'] = "cart";
