@@ -36,76 +36,21 @@
             <div class="col-md-9">
               <p class="text-muted lead">Text here.</p>
               <div class="row products products-big">
+                <?php foreach($product as $p) { ?>
                 <div class="col-lg-4 col-md-6">
                   <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product1.jpg" alt="" class="img-fluid image1"></a></div>
+                    <div class="image"><a href="../shopdetail/<?php echo $p->id_product; ?>"><img src="<?php echo base_url(); ?>assets/product_images/<?php echo $p->product_img1; ?>" alt="" class="img-fluid image1"></a></div>
                     <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Fur coat with very but very very long name</a></h3>
-                      <p class="price">$143.00</p>
+                      <h3 class="h5"><a href="../shopdetail/<?php echo $p->id_product; ?>"><?php echo $p->product_title; ?></a></h3>
+                      <p class="price"><?php echo $p->product_price; ?></p>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product2.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">White Blouse Armani</a></h3>
-                      <p class="price">
-                        <del>$280</del> $143.00
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product3.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Black Blouse Versace</a></h3>
-                      <p class="price">$143.00</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product4.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Black Blouse Versace</a></h3>
-                      <p class="price">$143.00</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product3.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">White Blouse Armani</a></h3>
-                      <p class="price">
-                        <del>$280</del> $143.00
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product4.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">White Blouse Versace</a></h3>
-                      <p class="price">$143.00</p>
-                    </div>
-                  </div>
-                </div>
+              <?php } ?>
               </div>
               <div class="pages">
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center">
-                  <ul class="pagination">
-                    <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                  </ul>
+                  <?php echo $pagination; ?>
                 </nav>
               </div>
             </div>
