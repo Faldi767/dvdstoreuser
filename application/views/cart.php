@@ -17,7 +17,7 @@
         <div class="container">
           <div class="row bar">
             <div class="col-lg-12">
-              <p class="text-muted lead">You currently have 3 item(s) in your cart.</p>
+              <p class="text-muted lead">You currently have <?php echo $count; ?> item(s) in your cart.</p>
             </div>
             <div id="basket" class="col-lg-9">
               <div class="box mt-0 pb-0 no-horizontal-padding">
@@ -29,38 +29,27 @@
                           <th colspan="2">Product</th>
                           <th>Quantity</th>
                           <th>Unit price</th>
-                          <th>Discount</th>
                           <th colspan="2">Total</th>
                         </tr>
                       </thead>
                       <tbody>
+                        <?php foreach($cart as $c) { ?>
                         <tr>
-                          <td><a href="#"><img src="img/detailsquare.jpg" alt="White Blouse Armani" class="img-fluid"></a></td>
-                          <td><a href="#">White Blouse Armani</a></td>
+                          <td><a href="#"><img src="<?php echo base_url(); ?>assets/product_images/<?php echo $c->product_img1; ?>" alt="White Blouse Armani" class="img-fluid"></a></td>
+                          <td><a href="#"><?php echo $c->product_title; ?></a></td>
                           <td>
-                            <input type="number" value="2" class="form-control">
+                            <?php echo $c->quantity; ?>
                           </td>
-                          <td>$123.00</td>
-                          <td>$0.00</td>
-                          <td>$246.00</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                          <td><?php echo $c->product_price; ?></td>
+                          <td><?php echo $c->product_price * $c->quantity; ?></td>
+                          <td><a href="#"><i class="fa fa-trash-alt"></i></a></td>
                         </tr>
-                        <tr>
-                          <td><a href="#"><img src="img/basketsquare.jpg" alt="Black Blouse Armani" class="img-fluid"></a></td>
-                          <td><a href="#">Black Blouse Armani</a></td>
-                          <td>
-                            <input type="number" value="1" class="form-control">
-                          </td>
-                          <td>$200.00</td>
-                          <td>$0.00</td>
-                          <td>$200.00</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                        </tr>
+                      <?php } ?>
                       </tbody>
                       <tfoot>
                         <tr>
                           <th colspan="5">Total</th>
-                          <th colspan="2">$446.00</th>
+                          <th colspan="2"><?php foreach($total as $t) { echo $t->total; } ?></th>
                         </tr>
                       </tfoot>
                     </table>
@@ -68,8 +57,7 @@
                   <div class="box-footer d-flex justify-content-between align-items-center">
                     <div class="left-col"><a href="shop-category.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                     <div class="right-col">
-                      <button class="btn btn-secondary"><i class="fa fa-sync-alt"></i> Update cart</button>
-                      <button type="submit" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
+                      <a href="<?php echo base_url('view/checkout'); ?>" type="button" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div>
                 </form>
@@ -80,33 +68,17 @@
                     <h3>You may also like these products</h3>
                   </div>
                 </div>
+                <?php foreach($latest as $l){ ?>
                 <div class="col-lg-3 col-md-6">
                   <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product2.jpg" alt="" class="img-fluid image1"></a></div>
+                    <div class="image"><a href="<?php echo $l->id_product; ?>"><img src="<?php echo base_url(); ?>assets/product_images/<?php echo $l->product_img1; ?>" alt="" class="img-fluid image1"></a></div>
                     <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
-                      <p class="price">$143</p>
+                      <h3 class="h5"><a href="<?php echo $l->id_product; ?>"><?php echo $l->product_title; ?></a></h3>
+                      <p class="price"><?php echo $l->product_price; ?></p>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product3.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                  <div class="product">
-                    <div class="image"><a href="shop-detail.html"><img src="img/product1.jpg" alt="" class="img-fluid image1"></a></div>
-                    <div class="text">
-                      <h3 class="h5"><a href="shop-detail.html">Fur coat</a></h3>
-                      <p class="price">$143</p>
-                    </div>
-                  </div>
-                </div>
+              <?php } ?>
               </div>
             </div>
             <div class="col-lg-3">
@@ -118,21 +90,9 @@
                 <div class="table-responsive">
                   <table class="table">
                     <tbody>
-                      <tr>
-                        <td>Order subtotal</td>
-                        <th>$446.00</th>
-                      </tr>
-                      <tr>
-                        <td>Shipping and handling</td>
-                        <th>$10.00</th>
-                      </tr>
-                      <tr>
-                        <td>Tax</td>
-                        <th>$0.00</th>
-                      </tr>
                       <tr class="total">
                         <td>Total</td>
-                        <th>$456.00</th>
+                        <th><?php foreach($total as $t) { echo $t->total; } ?></th>
                       </tr>
                     </tbody>
                   </table>

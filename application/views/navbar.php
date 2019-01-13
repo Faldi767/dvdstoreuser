@@ -5,7 +5,7 @@
         <div class="container">
           <div class="row d-flex align-items-center">
             <div class="col-md-6 d-md-block d-none">
-              <p>Welcome Guest!</p>
+              <p>Welcome <?php echo ($this->session->has_userdata('nama') ? $this->session->userdata("nama") : "Guest"); ?>!</p>
             </div>
             <div class="col-md-6">
               <div class="d-flex justify-content-md-end justify-content-between">
@@ -13,9 +13,18 @@
                   <li class="list-inline-item"><a href="#"><i class="fa fa-phone"></i></a></li>
                   <li class="list-inline-item"><a href="#"><i class="fa fa-envelope"></i></a></li>
                 </ul>
-                <div class="login"><a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn"><i class="fa fa-sign-in-alt"></i><span class="d-none d-md-inline-block">Sign In</span></a><a href="customer-register.html" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Sign Up</span></a>
+                <div class="login"><a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn"><i class="fa fa-sign-in-alt"></i><span class="d-none d-md-inline-block">Sign In</span></a>
+                  <?php if($this->session->userdata('status') != "login") {
+                    ?>
+                    <a href="customer-register.html" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Sign Up</span></a>
+                    <?php
+                  } ?>
+                  <?php if($this->session->userdata('status') == "login") { ?>
                   <a href="customer-register.html" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">My Account</span></a>
-                  <a href="customer-register.html" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Logout</span></a></div>
+                  <a href="customer-register.html" class="signup-btn"><i class="fa fa-user"></i><span class="d-none d-md-inline-block">Logout</span></a>
+                  <?php
+                } ?>
+                </div>
               </div>
             </div>
           </div>
@@ -31,12 +40,12 @@
               <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-              <form action="customer-orders.html" method="get">
+              <form action="<?php echo base_url('view/logincheck'); ?>" method="post">
                 <div class="form-group">
-                  <input id="email_modal" type="text" placeholder="email" class="form-control">
+                  <input id="email_modal" type="text" name="email" placeholder="email" class="form-control">
                 </div>
                 <div class="form-group">
-                  <input id="password_modal" type="password" placeholder="password" class="form-control">
+                  <input id="password_modal" type="password" name="password" placeholder="password" class="form-control">
                 </div>
                 <p class="text-center">
                   <button class="btn btn-template-outlined"><i class="fa fa-sign-in"></i> Log in</button>
@@ -56,11 +65,11 @@
             <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
             <div id="navigation" class="navbar-collapse collapse">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item menu-large <?php echo ($nav == "index" ? "active" : "") ?>"><a href="#">Home</a>
+                <li class="nav-item menu-large <?php echo ($nav == "index" ? "active" : "") ?>"><a href="<?php echo ($nav == "home" ? "#" : base_url('view/index')) ?>">Home</a>
                 </li>
-                <li class="nav-item menu-large <?php echo ($nav == "shop" ? "active" : "") ?>"><a href="#">Shop</a>
+                <li class="nav-item menu-large <?php echo ($nav == "shop" ? "active" : "") ?>"><a href="<?php echo ($nav == "shop" ? "#" : base_url('view/shop')) ?>">Shop</a>
                 </li>
-                <li class="nav-item menu-large <?php echo ($nav == "cart" ? "active" : "") ?>"><a href="#">Shopping Cart</a>
+                <li class="nav-item menu-large <?php echo ($nav == "cart" ? "active" : "") ?>"><a href="<?php echo ($nav == "cart" ? "#" : base_url('view/cart')) ?>">Shopping Cart</a>
                 </li>
               </ul>
             </div>

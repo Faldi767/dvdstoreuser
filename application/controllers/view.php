@@ -5,7 +5,7 @@ class View extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper('url');	
+		$this->load->helper('url');
 		$this->load->model('m_user');
 	}
 	public function index()
@@ -69,9 +69,13 @@ class View extends CI_Controller {
 	public function cart()
 	{
 		$data['nav'] = "cart";
+		$data2['cart'] = $this->m_user->loadcart($this->session->userdata("id"))->result();
+		$data2['count'] = $this->m_user->loadcart($this->session->userdata("id"))->num_rows();
+		$data2['latest'] = $this->m_user->loadlatest(3)->result();
+		$data2['total'] = $this->m_user->totalcart($this->session->userdata("id"))->result();
 		$this->load->view('head');
 		$this->load->view('navbar', $data);
-		$this->load->view('cart');
+		$this->load->view('cart', $data2);
 		$this->load->view('footer');
 	}
 	public function register()
@@ -101,9 +105,69 @@ class View extends CI_Controller {
 	public function checkout()
 	{
 		$data['nav'] = "cart";
+		$data2['total'] = $this->m_user->totalcart($this->session->userdata("id"))->result();
 		$this->load->view('head');
 		$this->load->view('navbar', $data);
-		$this->load->view('checkout');
+		$this->load->view('checkout', $data2);
 		$this->load->view('footer');
+	}
+	function logincheck(){
+		$username = $this->input->post('email');
+		$password = $this->input->post('password');
+		$where = array(
+			'customer_email' => $username,
+			'customer_password' => $password
+			);
+		$cek = $this->m_user->cek_login("tbl_customer",$where)->num_rows();
+		$name = $this->m_user->cek_login("tbl_customer",$where)->row();
+		if($cek > 0){
+
+			$data_session = array(
+				'nama' => $name->customer_name,
+				'id' => $name->id_customer,
+				'status' => "login"
+				);
+
+			$this->session->set_userdata($data_session);
+
+			redirect(base_url("view/index"));
+		}else{
+			echo "Username dan password salah !";
+		}
+	}
+	function logout() {
+		$this->session->sess_destroy();
+		redirect(base_url('view/index'));
+	}
+	function addtocart() {
+		$idproduct = $this->input->post('product_id');
+		$idcustomer = $this->session->userdata("id");
+		$quantity = $this->input->post('quantity');
+		if($this->session->has_userdata('nama')) {
+		$data = array(
+			'id_customer' => $idcustomer,
+			'id_product' => $idproduct,
+			'quantity' => $quantity
+			);
+		$this->m_user->addcart($data);
+		redirect('view/index');
+		} else {
+			redirect('view/register');
+			}
+	}
+	function processcheckout() {
+		$total = $this->m_user->totalcart($this->session->userdata("id"))->row();
+		if($this->session->has_userdata('nama')) {
+			$data = array(
+				'id_customer' => $this->session->userdata("id"),
+				'amount' => $total->total,
+				'order_date' => 'NOW()',
+				'order_status' => "Completed"
+				);
+				$this->m_user->addorder($data);
+				redirect('view/index');
+		} else {
+			redirect('view/register');
+		}
 	}
 }

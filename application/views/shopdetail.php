@@ -30,15 +30,16 @@
                 </div>
                 <div class="col-sm-6">
                   <div class="box">
-                    <form>
+                    <form action="<?php echo base_url('view/addtocart') ?>" method="post">
                       <div class="sizes">
                         <h3>Jumlah</h3>
-                        <select class="bs-select">
-                          <option value="small">1</option>
-                          <option value="medium">2</option>
-                          <option value="large">3</option>
-                          <option value="x-large">4</option>
+                        <select class="bs-select" name="quantity">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
                         </select>
+                        <input type="hidden" name="product_id" value="<?php echo $s->id_product; ?>">
                       </div>
                       <p class="price"><?php echo $s->product_price; ?></p>
                       <p class="text-center">
